@@ -21,6 +21,6 @@ with source_data as (
 
 )
 
-select * 
+SELECT * 
 from source_data
 --where id is not null
