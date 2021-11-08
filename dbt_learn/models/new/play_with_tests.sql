@@ -3,6 +3,11 @@ with customers as (
     from {{ source('sample','customer') }}
 )
 
-select C_CUSTOMER_SK, C_SALUTATION, {{ rename_segments('C_SALUTATION') }} as segment_adjusted, count(*) as counts
+select 
+{{ dbt_utils.surrogate_key(['C_CUSTOMER_SK', 'C_SALUTATION']) }} as id,
+C_CUSTOMER_SK, 
+C_SALUTATION, 
+{{ rename_segments('C_SALUTATION') }} as segment_adjusted,
+ count(*) as counts
 from customers
-{{group_by(3)}}
+{{group_by(4)}}

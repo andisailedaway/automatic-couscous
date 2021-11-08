@@ -42,8 +42,12 @@ models:
     # Config indicated by + and applies to all files under models/example/ as default
     example:
         +materialized: view
+    new:
+        +materialized: table
     pre-hook: "insert into dbt_terence.audit (model, state, time) values ( '{{ this.name }}' ,'starting_model_demployment' ,current_timestamp)"
  #   tags: "nightly" custom tag runs via dbt-run --model tag:nightly
+  # snowflake_spend: dbt test -m package: snowflake_spend 
+  #   +enabled: true
 
 vars:
     first: True
