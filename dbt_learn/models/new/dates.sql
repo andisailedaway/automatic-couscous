@@ -5,12 +5,12 @@ From {{ source('sample','date_dim') }}
 where d_date <= current_date
 
 {% if target.name == 'dev' %}
-and year(d_date) = 1996
+and year(d_date) = 2020
 {% endif%}
 {{group_by(2)}}
 
 {% if is_incremental() %}
-and d_date > (select max(d_date) from {{ this }} )
+and d_date >= (select max(d_date) from {{ this }} )
 {% endif %}
 
 -- Ideally used with updated_at/created_at fields. 
