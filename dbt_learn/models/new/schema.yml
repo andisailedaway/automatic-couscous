@@ -3,6 +3,7 @@ version: 2
 models:
   - name: dates
   - name: play_with_tests
+  - name: time
 
 sources:
   - name: sample
