@@ -1,6 +1,6 @@
 {{ config(materialized='incremental', unique_key = 'd_date', schema = 'second_schema') }}
 
-Select d_date, d_date_id, count(*) as count_of_days
+SELECT d_date, d_date_id, count(*) as count_of_days
 From {{ source('sample','date_dim') }}
 where d_date <= current_date
 
