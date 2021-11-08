@@ -1,0 +1,20 @@
+
+version: 2
+models:
+  - name: dates
+  - name: play_with_tests
+
+sources:
+  - name: sample
+    database: snowflake_sample_data
+    schema: TPCDS_SF10TCL
+    tables: # This allows you to test on raw_data source vs upstream. 
+      - name: date_dim
+        columns:
+          - name: d_date_id
+            tests:
+              - unique
+              - not_null
+      - name: store
+      - name: promotion
+      - name: customer
