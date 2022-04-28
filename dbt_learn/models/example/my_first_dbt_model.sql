@@ -9,18 +9,18 @@
     schema='terence_second_schema'
 */
 
-{{ config(materialized='table', alias='first_model') }}
+{{ config(materialized='table', alias='first_model' ) }}
 
 with source_data as (
 
-    select 1 as id, 'CO' as state, '2020-01-03 00:00:00.000 -0800' as time
+    select 1 as id
     union all
-    select null as id, 'CO' as state, '2020-01-03 00:00:00.000 -0800' as time
+    select null as id
     union all
-    select 4 as id,  'CO' as state, '2020-01-03 00:00:00.000 -0800' as time
+    select 3 as id
 
 )
 
 SELECT * 
 from source_data
---where id is not null
+

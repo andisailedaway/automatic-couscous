@@ -8,22 +8,32 @@ config-version: 2
 
 # # This setting configures which "profile" dbt uses for this project.
 # # This is the yml connection reference file in /Users/terence/.dbt/profiles.yml
-profile: 'dbt_learn_snowflake_db' 
+profile: 'udemy_dbt_learn' 
 
 # # These configurations specify where dbt should look for different types of files.
 # # The `source-paths` config, for example, states that models in this project can be
 # # found in the "models/" directory. You probably won't need to change these!
-source-paths: ["models"]
+# model-paths: ["models"]
+# analysis-paths: ["analysis"]
+# test-paths: ["tests"]
+# seed-paths: ["data"]
+# macro-paths: ["macros"]
+# snapshot-paths: ["snapshots"]
+
+# Set paths for dbt objects
 analysis-paths: ["analysis"]
-test-paths: ["tests"]
-data-paths: ["data"]
+asset-paths: ["docs/assets"]
+seed-paths: ["data"]
+
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
+model-paths: ["models"]
+test-paths: ["tests"]
 
-target-path: "target"  # directory which will store compiled SQL files
-clean-targets:         # directories to be removed by `dbt clean`
-  - "target"
-  - "dbt_modules"
+# target-path: "target"  # directory which will store compiled SQL files
+# clean-targets:         # directories to be removed by `dbt clean`
+#   - "target"
+#   - "dbt_modules"
 
 # # Configuring models
 # # Full documentation: https://docs.getdbt.com/docs/configuring-models
@@ -41,21 +51,25 @@ models:
   terence_dbt_project: # name of the project
     # Config indicated by + and applies to all files under models/example/ as default
     example:
-        +materialized: view
-    new:
-        +materialized: table
-    pre-hook: "insert into dbt_terence.audit (model, state, time) values ( '{{ this.name }}' ,'starting_model_demployment' ,current_timestamp)"
+        materialized: table
+        # vars:
+        #   my_first_variable: true
+        #   my_second_variable: 2020 #reference to be used in multiple projects for easy updates
+        #   my_third_variable: 1
+    # new:
+    #     +materialized: table
+    #pre-hook: "insert into dbt_terence.audit (model, state, time) values ( '{{ this.name }}' ,'starting_model_demployment' ,current_timestamp)"
  #   tags: "nightly" custom tag runs via dbt-run --model tag:nightly
   # snowflake_spend: dbt test -m package: snowflake_spend 
   #   +enabled: true
-
 vars:
-    first: True
-    second: 2020
-    third: 1
+  my_first_variable: true
+  my_second_variable: 2020 #reference to be used in multiple projects for easy updates
+  my_third_variable: 1
 
-on-run-start:
-  - "create table if not exists audit (model text, state text, time timestamp_ltz)"
+
+# on-run-start:
+#   - "create table if not exists audit (model text, state text, time timestamp_ltz)"
 
 # on-run-end:
 #   - 'grant usage on schema analytics.dbt to role analyst'

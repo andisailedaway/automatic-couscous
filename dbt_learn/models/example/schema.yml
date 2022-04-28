@@ -9,7 +9,12 @@ models:
         description: "The primary key for this table"
         tests:
           - unique
-          #- not_null
+        
+          # - accepted_values: #specific values you allow for a given field
+          #     values: [1, 2]
+          #     quote: false
+
+
 
   - name: my_second_dbt_model
     description: "A starter dbt model"
@@ -19,22 +24,52 @@ models:
         tests:
           - unique
           - not_null
-          - relationships:
-              to: ref('my_first_dbt_model')
-              field: id
+          # - relationships: #referential integrity from one model to another
+          #     to: ref('my_first_dbt_model')
+          #     field: id
 
-  - name: cumulative_orders_by_date
-    description: "Snowflake DBT test"
+
+  - name: snowflake_customer_purchases
+    description: "total purchases for each customer in snowflake sample data"
     columns:
-      - name: O_ORDERKEY
+      - name: c_custkey
         description: "The primary key for this table"
         tests:
           - unique
           - not_null
-          - accepted_values:
-              values: [1, 2]
-              quote: false # makes sure that we are comparing strings. If strings, we can ignore this paramter
 
-  - name: my_third_dbt_hidden_model
 
-  - name: my_fourth_dbt_hidden_model
+  - name: assignment_1
+    description: "cumulative sales per day"
+    columns:
+      - name: o_orderdate
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+
+  - name: dates
+
+  - name: incremental_time
+    columns:
+      - name: t_time
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+
+  # - name: cumulative_orders_by_date
+  #   description: "Snowflake DBT test"
+  #   columns:
+  #     - name: O_ORDERKEY
+  #       description: "The primary key for this table"
+  #       tests:
+  #         - unique
+  #         - not_null
+  #         - accepted_values:
+  #             values: [1, 2]
+  #             quote: false # makes sure that we are comparing strings. If strings, we can ignore this paramter
+
+  # - name: my_third_dbt_hidden_model
+
+  # - name: my_fourth_dbt_hidden_model
